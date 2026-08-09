@@ -1,7 +1,10 @@
-const { google } = require('googleapis');
-const functions = require('@google-cloud/functions-framework');
+import { google } from 'googleapis';
 
-functions.http('kiwifyWebhook', async (req, res) => {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(200).json({ message: "Webhook funcionando!" });
+  }
+
   try {
     const auth = new google.auth.GoogleAuth({
       keyFile: 'chave.json',
@@ -11,7 +14,7 @@ functions.http('kiwifyWebhook', async (req, res) => {
     const drive = google.drive({ version: 'v3', auth });
     const FOLDER_ID = '1-AX9CS8Fgp8_eSr21LBsJ3JtL6fSwsPK';
 
-    const emailComprador = req.body.customer.email;
+    const emailComprador = req.body.customer?.email;
 
     await drive.permissions.create({
       fileId: FOLDER_ID,
@@ -27,4 +30,4 @@ functions.http('kiwifyWebhook', async (req, res) => {
     console.error(error);
     res.status(500).send('Erro ao liberar acesso');
   }
-});
+}
