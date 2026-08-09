@@ -1,8 +1,7 @@
 {
-  "name": "meu-webhook",
+  "name": "kontaktlab",
   "version": "1.0.0",
-  "scripts": {
-    "start": "vercel dev"
-  },
-  "dependencies": {}
+  "dependencies": {
+    "googleapis": "^105.0.0"
+  }
 }
